@@ -13,7 +13,7 @@ header_raw = next(reader)
 # for index, coulmn_header in enumerate(header_raw):
 #     print(index, coulmn_header)
 
-# Extract high temparature; it's contain in coulmn 5, index 4
+# Extract high and lows temparature; it's contain in coulmn 5, index 4 and coulmn 6, index 5
 highs, dates, lows = [], [], []
 for row in reader:
     current_date = datetime.strptime(row[2], '%Y-%m-%d')
@@ -24,14 +24,15 @@ for row in reader:
     dates.append(current_date)
 
 
-# Plot the high temparature
+# Plot the high and lows temparature, and dates
 plt.style.use('seaborn-v0_8')
 fig, ax = plt.subplots()
-ax.plot(dates, highs, color='red')
-ax.plot(dates, lows, color='blue')
+ax.plot(dates, highs, color='red', alpha=0.5)
+ax.plot(dates, lows, color='blue', alpha=0.5)
+ax.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
 
 # Format plot
-ax.set_title("Daily High and Low Temparatures, 2021", fontsize=24)
+ax.set_title("Daily High and Low Temparatures, 2021", fontsize=20)
 ax.set_xlabel('', fontsize=14)
 fig.autofmt_xdate()
 ax.set_ylabel("Temparature(F)", fontsize=14)
